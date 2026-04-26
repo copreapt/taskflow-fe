@@ -6,8 +6,8 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "eslint src",
-        "lint:fix": "eslint src --fix",
+        "lint": "eslint app",
+        "lint:fix": "eslint app --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "prepare": "husky"

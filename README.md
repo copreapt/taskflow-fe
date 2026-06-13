@@ -66,3 +66,23 @@ docker build -t taskflow-frontend .
 | Image               | Content Size |
 | ------------------- | ------------ |
 | `taskflow-frontend` | 91.2MB       |
+
+## Deployment
+
+### Staging
+
+- **Server**: AWS EC2 t3.micro (eu-north-1)
+- **Docker image**: copreapt/taskflow-frontend:staging
+
+#### Manual deployment steps
+
+1. Build and push image to Docker Hub:
+   docker build -t copreapt/taskflow-frontend:staging .
+   docker push copreapt/taskflow-frontend:staging
+
+2. SSH into EC2:
+   ssh -i <staging-key>.pem ubuntu@<staging-ip>
+
+3. Pull and run:
+   docker pull copreapt/taskflow-frontend:staging
+   docker-compose -f docker-compose.frontend.yml up -d

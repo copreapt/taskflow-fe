@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: taskflow-frontend:staging
+    image: copreapt/taskflow-frontend:staging
     ports:
       - "3000:3000"
     environment:

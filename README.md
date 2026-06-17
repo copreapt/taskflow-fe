@@ -86,3 +86,44 @@ docker build -t taskflow-frontend .
 3. Pull and run:
    docker pull copreapt/taskflow-frontend:staging
    docker-compose -f docker-compose.frontend.yml up -d
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment.
+
+### How it works
+
+| Branch       | CI                 | Deployment                                |
+| ------------ | ------------------ | ----------------------------------------- |
+| `main`       | Runs on every push | Deploys to production (requires approval) |
+| `staging`    | Runs on every push | Deploys to staging (automatic)            |
+| Pull Request | Runs on every PR   | No deployment                             |
+
+### Pipeline steps
+
+1. Lint
+2. Type check
+3. Build
+4. Deploy (if branch is `staging` or `main`)
+
+### Environments
+
+| Environment | Frontend                    | Backend                     |
+| ----------- | --------------------------- | --------------------------- |
+| Staging     | http://<staging-ip>:3000    | http://<staging-ip>:3001    |
+| Production  | http://<production-ip>:3000 | http://<production-ip>:3001 |
+
+### Required GitHub Secrets
+
+| Secret                     | Description                    |
+| -------------------------- | ------------------------------ |
+| `DOCKER_USERNAME`          | Docker Hub username            |
+| `DOCKER_PASSWORD`          | Docker Hub access token        |
+| `EC2_HOST`                 | Staging EC2 IP                 |
+| `EC2_USER`                 | Staging EC2 username           |
+| `EC2_SSH_KEY`              | Staging EC2 SSH private key    |
+| `EC2_PROD_HOST`            | Production EC2 IP              |
+| `EC2_PROD_USER`            | Production EC2 username        |
+| `EC2_PROD_SSH_KEY`         | Production EC2 SSH private key |
+| `NEXT_PUBLIC_API_URL`      | Staging backend API URL        |
+| `NEXT_PUBLIC_API_URL_PROD` | Production backend API URL     |
